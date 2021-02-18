@@ -1,0 +1,32 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block navbar %}
+    <a class="nav-link" href="{% url 'home' %}" style="margin-right: 20px;">Home</a>
+    <a class="nav-link" href="{% url 'transferHistory' %}">Transfer History</a>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table table-hover mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}                
+                    <tr onclick="window.location='{% url 'customer' customer.id %}';">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.email}}</td>
+                        <td>{{customer.balance}}</td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

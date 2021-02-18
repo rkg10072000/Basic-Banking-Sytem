@@ -1,0 +1,28 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block navbar %}
+    <a class="nav-link" href="{% url 'accounts' %}" style="margin-right: 20px;">Accounts</a>
+    <a class="nav-link" href="{% url 'transferHistory' %}">Transfer History</a>
+{% endblock %}
+
+{% block body %}
+<div class="container"> 
+    <div class="row"> 
+        <div class="col-lg-6 mb-4" > 
+            <div class="card" style="background-color: orange; border: none;"> 
+                <img class="card-img-top" src="{% static 'app/bank_image.png' %}" alt="" width="600" height="480">  
+            </div> 
+        </div> 
+        <div class="col-lg-6 mb-4 align-self-center"> 
+            <div class="card text-center text-white" style="background-color: orange; border: none;"> 
+                <div class="card-body">
+               <h1>Banking Transactions</h1>
+               <h4>Money Tranfer Bank</h4>
+               <a href="{% url 'accounts' %}" class="btn btn-primary" style="width: 10rem; margin-top: 30px;">Get Started</a> 
+               </div>
+            </div> 
+        </div> 
+    </div> 
+</div> 
+{% endblock %}

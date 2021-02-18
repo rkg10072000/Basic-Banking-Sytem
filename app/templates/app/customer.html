@@ -1,0 +1,127 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block navbar %}
+    <a class="nav-link" href="{% url 'home' %}" style="margin-right: 20px;">Home</a>
+    <a class="nav-link" href="{% url 'accounts' %}">Accounts</a>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-2">
+        <div class="row"  >
+            <div class="col-12 align-self-center"> 
+                <div class="card text-center text-white" style="background-color: darkgray;"> 
+                    <div class="card-body">
+                        <h2>{{name}}</h2>
+                        <h6>{{email}}</h6>
+                        <h6>Current balance: {{balance}} Rs</h6>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">Send Money</button>
+                        {% if messages %}
+                        {% for message in messages %}
+                            <div class="col-8 offset-2 mt-1 mb-0 alert alert-danger">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div> 
+            </div> 
+        </div>
+    </div>
+    
+    <div class="container mt-1">
+        <div class="row"  >
+            <div class="col-12 align-self-center"> 
+                <div class="card text-center text-white" style="background-color: orange; border: none;"> 
+                    <div class="card-body">
+                        <h3>Your Transactions</h3>
+                   </div>
+                </div> 
+            </div> 
+        </div>
+        <div class="row"> 
+            <div class="col-lg-6 mb-4"> 
+                <div class="card" style="background-color: orange; border: none;">
+                    <h5>Money Received From</h5> 
+                    <table class="table table-hover mt-4">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in receivedFrom%}                
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{record.sender}}</td>
+                                    <td>{{record.amount}}</td>
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                </div> 
+            </div> 
+            <div class="col-lg-6 mb-4" > 
+                <div class="card" style="background-color: orange; border: none;">
+                    <h5>Money Sent To</h5>  
+                    <table class="table table-hover mt-4">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in sentTo %}                
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{record.receiver}}</td>
+                                    <td>{{record.amount}}</td>
+                                </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>  
+                </div> 
+            </div> 
+        </div> 
+    </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Transfer</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'transaction' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" class="form-control" name="sender" value="{{name}}">
+                        <div class="row">
+                            <div class="col">
+                                <select id="receivers" class="form-control" name="receiver">
+                                    <option value="" disabled selected hidden>Sent To</option>
+                                    {% for customer in receivers %}
+                                        <option>{{customer.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Amount" name="amount">
+                            </div> 
+                        </div>   
+                    <br>
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Transfer</button>
+                    </div>
+                </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'app/layout.html' %}
+{% load static %}
+
+{% block navbar %}
+    <a class="nav-link" href="{% url 'home' %}" style="margin-right: 20px;">Home</a>
+    <a class="nav-link" href="{% url 'accounts' %}">Accounts</a>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Sender</th>
+                    <th scope="col">Receiver</th>
+                    <th scope="col">Ammount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in history %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{record.sender}}</td>
+                        <td>{{record.receiver}}</td>
+                        <td>{{record.amount}}</td>
+                    </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
