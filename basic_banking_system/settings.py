@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'bne%&vk#px&ox1(b75mvu=t%w(l--n_6on(lz3=gingn7cdv)a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'rohit-bank.herokuapp.com']
 
 
 # Application definition
